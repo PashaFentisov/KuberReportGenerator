@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-generator-deployment
+  labels:
+    deployment: report-generator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: report-generator
+  template:
+    metadata:
+      labels:
+        app: report-generator
+    spec:
+      containers:
+        - name: report-generator
+          image: pashonokk/report-generator
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-configmap
+                  key: kafka-host
+            - name: EMAIL_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-props
+                  key: email-from
+            - name: SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-props
+                  key: smtp-pass
+
+      restartPolicy: Always

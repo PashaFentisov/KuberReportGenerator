@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-configmap
+data:
+  kafka-host: "kafka:9092"
+  

@@ -18,6 +18,9 @@ COPY --from=build /app/target/*.jar app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
+ENV EMAIL_FROM=pasha16.ua@gmail.com
+ENV SMTP_PASS=pass
+ENV KAFKA_HOST=localhost:9092
 
 # Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
